@@ -35,19 +35,10 @@ public class CarManager {
 
     public CarDto addCar(CreateCarRequest createCarRequest){
         Brand brand = brandManager.getBrandByBrandId(createCarRequest.getBrandId());
-
-        Car car = new Car( createCarRequest.getCarName(),createCarRequest.getDailyPrice(),createCarRequest.getProductYear(),brand);
         List<Integer> colorId=createCarRequest.getColorId();
-        List<Color> colors = new ArrayList<>();
-
-        for (int colorID :
-                colorId) {
-            Color color = colorManager.getColorByColorId(colorID);
-            colors.add(color);
-        }
-        car.setCarColors(colors);
+        List<Color> colors = colorId.stream().map(colorManager::getColorByColorId).collect(Collectors.toList());
+        Car car = new Car( createCarRequest.getCarName(),createCarRequest.getDailyPrice(),createCarRequest.getProductYear(),brand,colors);
         return modelMapper.map(carDao.save(car),CarDto.class);
-
     }
 
     public List<CarDto> getAllCar() {

@@ -22,6 +22,6 @@ public class Brand {
     private String brandName;
 
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "brand",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy = "brand",fetch = FetchType.LAZY)
     private List<Car> car;
 }
