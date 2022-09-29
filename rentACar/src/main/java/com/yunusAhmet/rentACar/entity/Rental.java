@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
+
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rentalId;
 
-    private Date rentDate =new Date();
+    private Date rentDate =new Date() ;
 
     private Date returnDate;
 
@@ -32,6 +33,7 @@ public class Rental {
     private Car car;
 
     public Rental( Date returnDate, Customer customer, Car car) {
+
         this.returnDate = returnDate;
         this.customer = customer;
         this.car = car;

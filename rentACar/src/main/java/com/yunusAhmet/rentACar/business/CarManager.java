@@ -5,6 +5,7 @@ import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.dataAccess.CarDao;
 import com.yunusAhmet.rentACar.dto.CarDto;
 import com.yunusAhmet.rentACar.dto.CreateCarRequest;
+
 import com.yunusAhmet.rentACar.dto.UpdateCarRequest;
 import com.yunusAhmet.rentACar.entity.Brand;
 import com.yunusAhmet.rentACar.entity.Car;
@@ -50,6 +51,7 @@ public class CarManager {
                collect(Collectors.toList());
 
     }
+
 
     protected Car findCarByCarId(int carId){
         return carDao.findById(carId).orElseThrow(() -> new CarNotFoundException(Constant.CAR_NOT_FOUND));

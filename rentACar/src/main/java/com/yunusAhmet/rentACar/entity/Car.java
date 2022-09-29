@@ -24,6 +24,10 @@ public class Car {
 
     private String productYear;
 
+
+
+
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             joinColumns = @JoinColumn,

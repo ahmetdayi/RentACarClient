@@ -1,14 +1,10 @@
 package com.yunusAhmet.rentACar.business;
 
 import com.yunusAhmet.rentACar.core.constant.Constant;
-
-import com.yunusAhmet.rentACar.core.exception.BrandAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.CustomerEmailAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.CustomerNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.CustomerDao;
-
 import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.entity.Brand;
 import com.yunusAhmet.rentACar.entity.Customer;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -39,7 +35,12 @@ public class CustomerManager {
 
     public CustomerDto createCustomer(CreateCustomerRequest request){
         findTheSameCustomerEmail(request);
-       Customer customer = new Customer(request.getFirstName(),request.getLastName(),request.getEmail(),request.getPassword());
+       Customer customer = new Customer
+               (request.getFirstName(),
+                       request.getLastName(),
+                       request.getEmail(),
+                       request.getPassword(),
+                       request.getMatchingPassword());
         return modelMapper.map(customerDao.save(customer),CustomerDto.class);
     }
 
@@ -50,6 +51,7 @@ public class CustomerManager {
     public CustomerDto updateCustomer(UpdateCustomerRequest request){
         Customer customer = getCustomerByCustomerId(request.getCustomerId());
         customer.setPassword(request.getPassword());
+        customer.setMatchingPassword(request.getMatchingPassword());
         customer.setFirstName(request.getFirstName());
         customer.setLastName(request.getLastName());
         return modelMapper.map(customerDao.save(customer),CustomerDto.class);
