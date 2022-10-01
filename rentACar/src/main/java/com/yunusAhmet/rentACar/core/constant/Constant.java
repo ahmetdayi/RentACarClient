@@ -13,4 +13,6 @@ public class Constant {
     public static final String CAR_NOT_DELIVER = "Car Not Deliver";
     public static final String CUSTOMER_ALREADY_RENT_A_CAR ="Customer Already Rent A Car" ;
     public static final String WRONG_RETURN_DATE ="Return Date Can't Be Before Now Date" ;
+    public static final String IMAGE_NOT_FOUND = "Image Id Not Found";
+    public static final String MAX_IMAGE_LESS_THAN_SIX = "You Must Upload Max Five Image ";
 }

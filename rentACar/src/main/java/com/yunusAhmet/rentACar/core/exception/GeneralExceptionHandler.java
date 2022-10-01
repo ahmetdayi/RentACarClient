@@ -57,6 +57,10 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> carNotDeliverExceptionHandler(CarNotDeliverException exception)  {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<?> imageNotFoundExceptionHandler(ImageNotFoundException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(ColorAlreadyExistException.class)
     public ResponseEntity<?> colorAlreadyExistExceptionHandler(ColorAlreadyExistException exception)  {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
@@ -75,6 +79,10 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(WrongReturnDateException.class)
     public ResponseEntity<?> wrongReturnDateExceptionHandler(WrongReturnDateException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(MaxImageException.class)
+    public ResponseEntity<?>maxImageExceptionHandler(MaxImageException exception)  {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

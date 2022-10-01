@@ -1,13 +1,11 @@
 package com.yunusAhmet.rentACar.dto;
 
-import com.yunusAhmet.rentACar.entity.Rental;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+
 
 @Data
 @NoArgsConstructor
