@@ -29,17 +29,13 @@ public class BrandManager {
     protected Brand getBrandByBrandId(int brandId){
        return brandDao.findById(brandId).orElseThrow(() -> new BrandNotFoundException(Constant.BRAND_NOT_FOUND));
     }
-    protected void findTheSameBrand(CreateBrandRequest request) {
+    public BrandDto createBrand(CreateBrandRequest request){
         Optional<Brand> brand = brandDao.findBrandByBrandName(request.getBrandName());
         if (brand.isPresent()) {
             throw new BrandAlreadyExistException(Constant.BRAND_ALREADY_EXIST);
         }
-    }
-
-    public BrandDto createBrand(CreateBrandRequest request){
-        findTheSameBrand(request);
-        Brand brand = new Brand(request.getBrandName());
-        return modelMapper.map(brandDao.save(brand),BrandDto.class);
+        Brand brand1 = new Brand(request.getBrandName());
+        return modelMapper.map(brandDao.save(brand1),BrandDto.class);
     }
 
     public void deleteBrandByBrandId(int brandId){
@@ -47,9 +43,13 @@ public class BrandManager {
     }
 
     public BrandDto updateBrand(UpdateBrandRequest request){
-        Brand brand = getBrandByBrandId(request.getBrandId());
-        brand.setBrandName(request.getBrandName());
-       return modelMapper.map(brandDao.save(brand),BrandDto.class);
+        Optional<Brand> brand = brandDao.findBrandByBrandName(request.getBrandName());
+        if (brand.isPresent()) {
+            throw new BrandAlreadyExistException(Constant.BRAND_ALREADY_EXIST);
+        }
+        Brand brand1 = getBrandByBrandId(request.getBrandId());
+        brand1.setBrandName(request.getBrandName());
+        return modelMapper.map(brandDao.save(brand1),BrandDto.class);
     }
 
 
