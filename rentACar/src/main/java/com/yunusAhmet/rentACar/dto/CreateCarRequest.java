@@ -1,6 +1,7 @@
 package com.yunusAhmet.rentACar.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode
 public class CreateCarRequest {
 
     @NotBlank

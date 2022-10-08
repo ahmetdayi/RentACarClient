@@ -3,6 +3,7 @@ package com.yunusAhmet.rentACar.dto;
 import com.yunusAhmet.rentACar.core.validator.PasswordMatches;
 import com.yunusAhmet.rentACar.core.validator.ValidPassword;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @PasswordMatches(message ="Password dont match")
 @Data
+@EqualsAndHashCode
 public class UpdateCustomerRequest {
 
     @NotNull

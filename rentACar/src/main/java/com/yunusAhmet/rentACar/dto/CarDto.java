@@ -2,12 +2,14 @@ package com.yunusAhmet.rentACar.dto;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode
 public class CarDto {
 
     //carDto ıle car entıty ıcerısındekı degısken ısımlerının aynı olması lazım

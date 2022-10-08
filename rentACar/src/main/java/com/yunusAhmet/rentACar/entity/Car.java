@@ -1,17 +1,16 @@
 package com.yunusAhmet.rentACar.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
+@EqualsAndHashCode
 public class Car {
 
     @Id
@@ -23,11 +22,6 @@ public class Car {
     private Long dailyPrice;
 
     private String productYear;
-
-
-
-
-
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             joinColumns = @JoinColumn,
@@ -53,5 +47,26 @@ public class Car {
         this.brand = brand;
     }
 
+    public Car(int carId, String carName, Long dailyPrice, String productYear, List<Color> carColors, Brand brand) {
+        this.carId = carId;
+        this.carName = carName;
+        this.dailyPrice = dailyPrice;
+        this.productYear = productYear;
+        this.carColors = carColors;
+        this.brand = brand;
+    }
 
+    public Car(int carId, String carName, Brand brand){
+        this.carId = carId;
+        this.carName = carName;
+        this.brand = brand;
+    }
+
+    public Car(int carId, String carName, Long dailyPrice, String productYear, List<Color> carColors) {
+        this.carId = carId;
+        this.carName = carName;
+        this.dailyPrice = dailyPrice;
+        this.productYear = productYear;
+        this.carColors = carColors;
+    }
 }

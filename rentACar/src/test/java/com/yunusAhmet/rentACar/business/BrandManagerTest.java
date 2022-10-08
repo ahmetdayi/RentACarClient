@@ -4,16 +4,23 @@ import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.core.exception.BrandAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.BrandDao;
-import com.yunusAhmet.rentACar.dto.BrandDto;
-import com.yunusAhmet.rentACar.dto.CreateBrandRequest;
-import com.yunusAhmet.rentACar.dto.UpdateBrandRequest;
-import com.yunusAhmet.rentACar.dto.UpdateCustomerRequest;
+import com.yunusAhmet.rentACar.dto.*;
 import com.yunusAhmet.rentACar.entity.Brand;
+import com.yunusAhmet.rentACar.entity.Car;
+import com.yunusAhmet.rentACar.entity.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,7 +29,6 @@ public class BrandManagerTest {
 
     private BrandDao brandDao;
     private ModelMapper modelMapper;
-
     private BrandManager brandManager;
     @BeforeEach
     void setUp() {
@@ -98,4 +104,26 @@ public class BrandManagerTest {
 
         verify(brandDao).findBrandByBrandName(request.getBrandName());}
 
+    @Test
+    public void testGetAllCar_whenGiveBrandIdExists_shouldReturnListOfCar(){
+        int brandId=2;
+        BrandCarDto brandCarDto = new BrandCarDto(1, "bmw");
+
+        List<BrandCarDto> brandCarDtos = List.of(brandCarDto);
+        Car car = new Car(1, "bmw",new Brand(2,"a8"));
+        Brand brand= new Brand(2,"a8",List.of(car));
+        List<Car> cars = List.copyOf(List.of(car));
+
+        when(brandDao.findById(brandId)).thenReturn(Optional.of(brand));
+       when(modelMapper.map(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn(brandCarDto);
+        List<BrandCarDto> result = brandManager.getAllCarByBrandId(brandId);
+        assertEquals(brandCarDtos,result);
+
+        verify(brandDao).findById(brandId);
+        verify(modelMapper).map(car,BrandCarDto.class);
+
+
+
+
+    }
 }
