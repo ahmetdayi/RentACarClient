@@ -5,8 +5,8 @@ import com.yunusAhmet.rentACar.core.exception.CustomerEmailAlreadyExistException
 import com.yunusAhmet.rentACar.core.exception.CustomerNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.CustomerDao;
 import com.yunusAhmet.rentACar.dto.*;
+import com.yunusAhmet.rentACar.dto.converter.CustomerDtoConverter;
 import com.yunusAhmet.rentACar.entity.Customer;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,32 +16,30 @@ public class CustomerManager {
 
     private final CustomerDao customerDao;
 
-    private final ModelMapper modelMapper;
+    private final CustomerDtoConverter customerDtoConverter;
 
-    public CustomerManager(CustomerDao customerDao, ModelMapper modelMapper) {
+    public CustomerManager(CustomerDao customerDao, CustomerDtoConverter customerDtoConverter) {
         this.customerDao = customerDao;
-        this.modelMapper = modelMapper;
+
+        this.customerDtoConverter = customerDtoConverter;
     }
 
     protected Customer getCustomerByCustomerId(int customerId){
         return customerDao.findById(customerId).orElseThrow(() -> new CustomerNotFoundException(Constant.CUSTOMER_NOT_FOUND));
     }
-    private void findTheSameCustomerEmail(CreateCustomerRequest request) {
+
+    public CustomerDto createCustomer(CreateCustomerRequest request){
         Optional<Customer> customer = customerDao.findCustomerByEmail(request.getEmail());
         if (customer.isPresent()) {
             throw new CustomerEmailAlreadyExistException(Constant.CUSTOMER_EMAIL_ALREADY_EXIST);
         }
-    }
-
-    public CustomerDto createCustomer(CreateCustomerRequest request){
-        findTheSameCustomerEmail(request);
-       Customer customer = new Customer
+       Customer customer1 = new Customer
                (request.getFirstName(),
                        request.getLastName(),
                        request.getEmail(),
                        request.getPassword(),
                        request.getMatchingPassword());
-        return modelMapper.map(customerDao.save(customer),CustomerDto.class);
+        return customerDtoConverter.convert(customerDao.save(customer1));
     }
 
     public void deleteCustomerByCustomerId(int customerId){
@@ -49,11 +47,11 @@ public class CustomerManager {
     }
 
     public CustomerDto updateCustomer(UpdateCustomerRequest request){
-        Customer customer = getCustomerByCustomerId(request.getCustomerId());
-        customer.setPassword(request.getPassword());
-        customer.setMatchingPassword(request.getMatchingPassword());
-        customer.setFirstName(request.getFirstName());
-        customer.setLastName(request.getLastName());
-        return modelMapper.map(customerDao.save(customer),CustomerDto.class);
+        Customer customer1 = getCustomerByCustomerId(request.getCustomerId());
+        customer1.setPassword(request.getPassword());
+        customer1.setMatchingPassword(request.getMatchingPassword());
+        customer1.setFirstName(request.getFirstName());
+        customer1.setLastName(request.getLastName());
+        return customerDtoConverter.convert(customerDao.save(customer1));
     }
 }

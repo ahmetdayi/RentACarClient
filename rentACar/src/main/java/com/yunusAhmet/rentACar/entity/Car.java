@@ -47,7 +47,7 @@ public class Car {
         this.brand = brand;
     }
 
-    public Car(int carId, String carName, Long dailyPrice, String productYear, List<Color> carColors, Brand brand) {
+    public Car(int carId, String carName, Long dailyPrice, String productYear,  Brand brand,List<Color> carColors) {
         this.carId = carId;
         this.carName = carName;
         this.dailyPrice = dailyPrice;
@@ -69,4 +69,6 @@ public class Car {
         this.productYear = productYear;
         this.carColors = carColors;
     }
+
+
 }

@@ -7,10 +7,10 @@ import com.yunusAhmet.rentACar.core.exception.WrongReturnDateException;
 import com.yunusAhmet.rentACar.dataAccess.RentalDao;
 import com.yunusAhmet.rentACar.dto.RentACarRequest;
 import com.yunusAhmet.rentACar.dto.RentCarDto;
+import com.yunusAhmet.rentACar.dto.converter.RentCarDtoConverter;
 import com.yunusAhmet.rentACar.entity.Car;
 import com.yunusAhmet.rentACar.entity.Customer;
 import com.yunusAhmet.rentACar.entity.Rental;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
@@ -23,14 +23,15 @@ public class RentalManager {
     private final CustomerManager customerManager;
 
     private final CarManager carManager;
-    private final ModelMapper modelMapper;
+    private final RentCarDtoConverter carDtoConverter;
 
 
-    public RentalManager(RentalDao rentalDao, CustomerManager customerManager, CarManager carManager, ModelMapper modelMapper) {
+    public RentalManager(RentalDao rentalDao, CustomerManager customerManager, CarManager carManager, RentCarDtoConverter carDtoConverter) {
         this.rentalDao = rentalDao;
         this.customerManager = customerManager;
         this.carManager = carManager;
-        this.modelMapper = modelMapper;
+
+        this.carDtoConverter = carDtoConverter;
     }
 
     public RentCarDto rentACar(RentACarRequest request) {
@@ -50,7 +51,7 @@ public class RentalManager {
 
         customerAlreadyRent(customer, customerIds);
 
-        return modelMapper.map(rentalDao.save(rental), RentCarDto.class);
+        return carDtoConverter.convert(rentalDao.save(rental));
 
 
     }
@@ -81,8 +82,7 @@ public class RentalManager {
     }
 }
 
-//arabanın ımagelerını ekleme
-//jwt
+
 
 
 

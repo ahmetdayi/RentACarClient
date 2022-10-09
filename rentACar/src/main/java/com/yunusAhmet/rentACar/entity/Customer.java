@@ -40,4 +40,21 @@ public class Customer {
         this.password = password;
 
     }
+
+    public Customer(int customerId, String firstName, String lastName, String password, String matchingPassword) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.matchingPassword = matchingPassword;
+    }
+
+    public Customer(int customerId, String firstName, String lastName, String email, String password, String matchingPassword) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.matchingPassword = matchingPassword;
+    }
 }

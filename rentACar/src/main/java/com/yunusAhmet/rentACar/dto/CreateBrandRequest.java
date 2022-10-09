@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode
 public class CreateBrandRequest {
 
+
     @NotBlank
     private String brandName;
 }

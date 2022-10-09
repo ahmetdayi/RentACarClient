@@ -7,10 +7,10 @@ import com.yunusAhmet.rentACar.dto.CarDto;
 import com.yunusAhmet.rentACar.dto.CreateCarRequest;
 
 import com.yunusAhmet.rentACar.dto.UpdateCarRequest;
+import com.yunusAhmet.rentACar.dto.converter.CarDtoConverter;
 import com.yunusAhmet.rentACar.entity.Brand;
 import com.yunusAhmet.rentACar.entity.Car;
 import com.yunusAhmet.rentACar.entity.Color;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
@@ -25,29 +25,41 @@ public class CarManager {
     private final BrandManager brandManager;
     private final ColorManager colorManager;
 
-    private final ModelMapper modelMapper;
+    private final CarDtoConverter carDtoConverter;
 
 
-    public CarManager(CarDao carDao, BrandManager brandManager, ColorManager colorManager, ModelMapper modelMapper) {
+    public CarManager(
+            CarDao carDao,
+            BrandManager brandManager,
+            ColorManager colorManager,
+            CarDtoConverter carDtoConverter) {
+
         this.carDao = carDao;
         this.brandManager = brandManager;
         this.colorManager = colorManager;
-        this.modelMapper = modelMapper;
+        this.carDtoConverter = carDtoConverter;
+
     }
 
-    public CarDto addCar(CreateCarRequest createCarRequest){
+    public CarDto createCar(CreateCarRequest createCarRequest){
         Brand brand = brandManager.getBrandByBrandId(createCarRequest.getBrandId());
         List<Integer> colorId=createCarRequest.getColorId();
         List<Color> colors = colorId.stream().map(colorManager::getColorByColorId).collect(Collectors.toList());
-        Car car = new Car( createCarRequest.getCarName(),createCarRequest.getDailyPrice(),createCarRequest.getProductYear(),brand,colors);
-        return modelMapper.map(carDao.save(car),CarDto.class);
+        Car car = new Car
+                (
+                        createCarRequest.getCarName(),
+                        createCarRequest.getDailyPrice(),
+                        createCarRequest.getProductYear(),
+                        brand,
+                        colors);
+        return carDtoConverter.convert(carDao.save(car));
     }
 
     public List<CarDto> getAllCar() {
         List<Car> cars = this.carDao.findAll();
 
        return cars.stream().
-               map(car -> modelMapper.map(car,CarDto.class)).
+               map(carDtoConverter::convert).
                collect(Collectors.toList());
 
     }
@@ -72,7 +84,7 @@ public class CarManager {
         car.setBrand(brand);
         car.setDailyPrice(updateCarRequest.getDailyPrice());
         car.setProductYear(updateCarRequest.getProductYear());
-       return modelMapper.map(carDao.save(car),CarDto.class);
+       return carDtoConverter.convert(carDao.save(car));
 
     }
 }

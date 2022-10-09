@@ -23,7 +23,7 @@ public class CarController {
 
     @PostMapping()
     public ResponseEntity<CarDto> createCar(@Valid @RequestBody CreateCarRequest request){
-        return new ResponseEntity<>(carManager.addCar(request),HttpStatus.CREATED);
+        return new ResponseEntity<>(carManager.createCar(request),HttpStatus.CREATED);
     }
 
     @GetMapping
