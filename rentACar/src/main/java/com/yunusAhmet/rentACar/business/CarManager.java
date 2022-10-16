@@ -58,9 +58,7 @@ public class CarManager {
     public List<CarDto> getAllCar() {
         List<Car> cars = this.carDao.findAll();
 
-       return cars.stream().
-               map(carDtoConverter::convert).
-               collect(Collectors.toList());
+       return carDtoConverter.convert(cars);
 
     }
 
