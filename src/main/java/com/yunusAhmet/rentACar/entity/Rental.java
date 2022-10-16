@@ -1,7 +1,7 @@
 package com.yunusAhmet.rentACar.entity;
 
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Entity
 @Data
@@ -40,7 +40,6 @@ public class Rental {
         this.rentDate = rentDate;
         this.returnDate = returnDate;
         this.customer = customer;
-        this.rentDate = LocalDateTime.now();
         this.car = car;
     }
 

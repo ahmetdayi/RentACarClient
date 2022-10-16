@@ -39,7 +39,8 @@ public class CustomerManager {
                        request.getEmail(),
                        request.getPassword(),
                        request.getMatchingPassword());
-        return customerDtoConverter.convert(customerDao.save(customer1));
+        Customer save = customerDao.save(customer1);
+        return customerDtoConverter.convert(save);
     }
 
     public void deleteCustomerByCustomerId(int customerId){

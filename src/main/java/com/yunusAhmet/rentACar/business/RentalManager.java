@@ -13,8 +13,8 @@ import com.yunusAhmet.rentACar.entity.Customer;
 import com.yunusAhmet.rentACar.entity.Rental;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,12 +28,15 @@ public class RentalManager {
     private final RentCarDtoConverter carDtoConverter;
 
 
+
+
     public RentalManager(RentalDao rentalDao, CustomerManager customerManager, CarManager carManager, RentCarDtoConverter carDtoConverter) {
         this.rentalDao = rentalDao;
         this.customerManager = customerManager;
         this.carManager = carManager;
 
         this.carDtoConverter = carDtoConverter;
+
     }
 
     public RentCarDto rentACar(RentACarRequest request) {
@@ -53,7 +56,10 @@ public class RentalManager {
 
         customerAlreadyRent(customer, customerIds);
 
-        return carDtoConverter.convert(rentalDao.save(rental));
+
+        Rental save = rentalDao.save(rental);
+
+        return carDtoConverter.convert(save);
 
 
     }
