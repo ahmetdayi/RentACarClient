@@ -69,7 +69,7 @@ public class BrandManagerTest {
     @Test
     public void testDeleteAndUpdateBrand_whenBrandIdDoesntExist_shouldReturnException(){
 
-        when(brandDao.findById(1)).thenThrow(new BrandNotFoundException(Constant.BRAND_NOT_FOUND));
+        when(brandDao.findById(1)).thenReturn(Optional.empty());
         assertThrows(BrandNotFoundException.class,()-> brandManager.getBrandByBrandId(1));
     }
 
@@ -94,7 +94,7 @@ public class BrandManagerTest {
         UpdateBrandRequest request = new UpdateBrandRequest(0,"a8");
         Brand brand= new Brand(0,"a8");
         when(brandDao.findBrandByBrandName(brand.getBrandName())).
-                thenThrow(new BrandAlreadyExistException(Constant.BRAND_ALREADY_EXIST));
+                thenReturn(Optional.of(brand));
 
         assertThrows( BrandAlreadyExistException.class,() -> brandManager.updateBrand(request));
 
@@ -123,8 +123,21 @@ public class BrandManagerTest {
         verify(brandDao).findById(brandId);
         verify(brandCarDtoConverter).convert(cars);
 
-
-
-
     }
+
+    @Test
+    public void testDeleteBrand_whenBrandIdExists_shouldDeleteBrand(){
+      int brandId =1;
+
+        Brand brand = new Brand(brandId,"a8");
+
+        when(brandDao.findById(1)).thenReturn(Optional.of(brand));
+
+        brandManager.deleteBrandByBrandId(brand.getBrandId());
+
+        verify(brandDao).findById(brandId);
+        verify(brandDao).deleteById(brand.getBrandId());
+    }
+
+
 }

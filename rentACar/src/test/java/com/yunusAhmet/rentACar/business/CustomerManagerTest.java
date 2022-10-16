@@ -9,7 +9,6 @@ import com.yunusAhmet.rentACar.dataAccess.CustomerDao;
 import com.yunusAhmet.rentACar.dto.*;
 
 import com.yunusAhmet.rentACar.dto.converter.CustomerDtoConverter;
-
 import com.yunusAhmet.rentACar.entity.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -147,8 +146,21 @@ public class CustomerManagerTest {
     @Test
     public void testDeleteAndUpdateCustomer_whenCustomerIdDoesntExist_shouldReturnException(){
 
-        when(customerDao.findById(1)).thenThrow(new CustomerNotFoundException(Constant.CUSTOMER_NOT_FOUND));
+        when(customerDao.findById(1)).thenReturn(Optional.empty());
         assertThrows(CustomerNotFoundException.class,()-> customerManager.getCustomerByCustomerId(1));
+    }
+    @Test
+    public void testDeleteCustomer_whenCustomerIdExists_shouldDeleteCustomer(){
+        int customerId =1;
+
+        Customer customer = new Customer(customerId,"Ahmet","Dayi","Ahmet.26","Ahmet.26");
+
+        when(customerDao.findById(1)).thenReturn(Optional.of(customer));
+
+        customerManager.deleteCustomerByCustomerId(customer.getCustomerId());
+
+        verify(customerDao).findById(customerId);
+        verify(customerDao).deleteById(customer.getCustomerId());
     }
 
 

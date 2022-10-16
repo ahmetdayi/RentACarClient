@@ -1,6 +1,7 @@
 package com.yunusAhmet.rentACar.business;
 
 import com.yunusAhmet.rentACar.core.constant.Constant;
+import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
 import com.yunusAhmet.rentACar.core.exception.ColorAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.ColorNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.ColorDao;
@@ -8,6 +9,7 @@ import com.yunusAhmet.rentACar.dto.ColorDto;
 import com.yunusAhmet.rentACar.dto.CreateColorRequest;
 import com.yunusAhmet.rentACar.dto.UpdateColorRequest;
 import com.yunusAhmet.rentACar.dto.converter.ColorDtoConverter;
+import com.yunusAhmet.rentACar.entity.Brand;
 import com.yunusAhmet.rentACar.entity.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,8 +96,24 @@ public class ColorManagerTest {
     @Test
     public void testDeleteAndUpdateColor_whenColorIdDoesntExist_shouldReturnException(){
 
-        when(colorDao.findById(1)).thenThrow(new ColorNotFoundException(Constant.COLOR_NOT_FOUND));
+        when(colorDao.findById(1)).thenReturn(Optional.empty());
         assertThrows(ColorNotFoundException.class,()-> colorManager.getColorByColorId(1));
     }
+    @Test
+    public void testDeleteColor_whenColorIdExists_shouldDeleteColor(){
+        int colorId =1;
+
+        Color color = new Color(colorId,"black");
+
+        when(colorDao.findById(1)).thenReturn(Optional.of(color));
+
+        colorManager.deleteColorByColorId(color.getColorId());
+
+        verify(colorDao).findById(colorId);
+        verify(colorDao).deleteById(color.getColorId());
+    }
+
+
+
 
 }
