@@ -14,14 +14,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int rentalId;
+    private int rentalId;//UUID
 
     private LocalDateTime rentDate  ;
 
@@ -50,4 +49,7 @@ public class Rental {
         this.customer = customer;
         this.car = car;
     }
+
+    //annotation ıle unıq olup olmadıgını bellı et
+
 }

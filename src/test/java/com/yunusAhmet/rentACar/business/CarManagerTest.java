@@ -1,7 +1,6 @@
 package com.yunusAhmet.rentACar.business;
 
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
+
 import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.CarDao;
 import com.yunusAhmet.rentACar.dto.*;
@@ -11,12 +10,11 @@ import com.yunusAhmet.rentACar.entity.Car;
 import com.yunusAhmet.rentACar.entity.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

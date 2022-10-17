@@ -1,6 +1,5 @@
 package com.yunusAhmet.rentACar.business;
 
-import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.core.exception.BrandAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.BrandDao;

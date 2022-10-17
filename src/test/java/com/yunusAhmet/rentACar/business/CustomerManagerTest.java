@@ -1,6 +1,6 @@
 package com.yunusAhmet.rentACar.business;
 
-import com.yunusAhmet.rentACar.core.constant.Constant;
+
 
 import com.yunusAhmet.rentACar.core.exception.CustomerEmailAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.CustomerNotFoundException;
