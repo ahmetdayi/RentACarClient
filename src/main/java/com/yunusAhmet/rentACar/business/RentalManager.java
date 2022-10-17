@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -45,7 +46,7 @@ public class RentalManager {
         Customer customer = customerManager.getCustomerByCustomerId(request.getCustomerId());
 
         dateControl(request);
-        Rental rental = new Rental(LocalDateTime.now(),request.getReturnDate(), customer, car);
+        Rental rental = new Rental(LocalDateTime.now().withNano(0),request.getReturnDate(), customer, car);
 
 
         List<Rental> rental1 = rentalDao.findAll();

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,7 +68,7 @@ public class RentalManagerTest {
                         customer.getLastName(),
                         customer.getEmail()
                 );
-        Rental rental = new Rental(LocalDateTime.now(),LocalDateTime.of(2023,12,12,12,24,10),customer,car);
+        Rental rental = new Rental(LocalDateTime.now().withNano(0),LocalDateTime.of(2023,12,12,12,24,10),customer,car);
         Rental saveRental = new Rental(1,rental.getRentDate(),rental.getReturnDate(),customer,car);
 
         List<Rental> rentals = List.of(
@@ -84,7 +85,7 @@ public class RentalManagerTest {
         when(carManager.findCarByCarId(car.getCarId())).thenReturn(car);
         when(customerManager.getCustomerByCustomerId(customer.getCustomerId())).thenReturn(customer);
         when(rentalDao.findAll()).thenReturn(rentals);
-        when(rentalDao.save(any(Rental.class))).thenReturn(saveRental);
+        when(rentalDao.save(rental)).thenReturn(saveRental);
         when(carDtoConverter.convert(saveRental)).thenReturn(expected);
 
         RentCarDto result = rentalManager.rentACar(request);
@@ -93,7 +94,7 @@ public class RentalManagerTest {
         verify(carManager).findCarByCarId(car.getCarId());
         verify(customerManager).getCustomerByCustomerId(customer.getCustomerId());
         verify(rentalDao).findAll();
-        verify(rentalDao).save(any(Rental.class));
+        verify(rentalDao).save(rental);
         verify(carDtoConverter).convert(saveRental);
 
     }
