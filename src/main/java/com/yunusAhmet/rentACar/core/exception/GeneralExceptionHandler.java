@@ -85,6 +85,10 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?>maxImageExceptionHandler(MaxImageException exception)  {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(TokenNotValidException.class)
+    public ResponseEntity<?>tokenNotValidExceptionHandler(TokenNotValidException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 
 

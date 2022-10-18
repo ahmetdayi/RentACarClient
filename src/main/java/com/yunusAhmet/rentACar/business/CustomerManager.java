@@ -7,21 +7,30 @@ import com.yunusAhmet.rentACar.dataAccess.CustomerDao;
 import com.yunusAhmet.rentACar.dto.*;
 import com.yunusAhmet.rentACar.dto.converter.CustomerDtoConverter;
 import com.yunusAhmet.rentACar.entity.Customer;
+import com.yunusAhmet.rentACar.entity.Role;
+import com.yunusAhmet.rentACar.entity.SecurityCustomer;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class CustomerManager {
+public class CustomerManager implements UserDetailsService {
 
     private final CustomerDao customerDao;
 
     private final CustomerDtoConverter customerDtoConverter;
 
+
+
     public CustomerManager(CustomerDao customerDao, CustomerDtoConverter customerDtoConverter) {
         this.customerDao = customerDao;
 
         this.customerDtoConverter = customerDtoConverter;
+
     }
 
     protected Customer getCustomerByCustomerId(int customerId){
@@ -29,6 +38,7 @@ public class CustomerManager {
     }
 
     public CustomerDto createCustomer(CreateCustomerRequest request){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Optional<Customer> customer = customerDao.findCustomerByEmail(request.getEmail());
         if (customer.isPresent()) {
             throw new CustomerEmailAlreadyExistException(Constant.CUSTOMER_EMAIL_ALREADY_EXIST);
@@ -37,8 +47,9 @@ public class CustomerManager {
                (request.getFirstName(),
                        request.getLastName(),
                        request.getEmail(),
-                       request.getPassword(),
-                       request.getMatchingPassword());
+                       passwordEncoder.encode(request.getPassword()),
+                       passwordEncoder.encode(request.getMatchingPassword()),
+                       Role.USER);
         Customer save = customerDao.save(customer1);
         return customerDtoConverter.convert(save);
     }
@@ -54,5 +65,15 @@ public class CustomerManager {
         customer1.setFirstName(request.getFirstName());
         customer1.setLastName(request.getLastName());
         return customerDtoConverter.convert(customerDao.save(customer1));
+    }
+
+    public Customer findCustomerByEmail(String email){
+        return customerDao.findCustomerByEmail(email).orElseThrow(()->
+                new CustomerNotFoundException(Constant.CUSTOMER_NOT_FOUND));
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Customer customer = findCustomerByEmail(username);
+        return new SecurityCustomer(customer);
     }
 }

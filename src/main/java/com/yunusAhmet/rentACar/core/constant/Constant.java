@@ -15,4 +15,5 @@ public class Constant {
     public static final String WRONG_RETURN_DATE ="Return Date Can't Be Before Now Date" ;
     public static final String IMAGE_NOT_FOUND = "Image Id Not Found";
     public static final String MAX_IMAGE_LESS_THAN_SIX = "You Must Upload Max Five Image ";
+    public static final String TOKEN_NOT_VALID = "Token Not Valid";
 }

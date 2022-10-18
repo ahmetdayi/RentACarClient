@@ -13,6 +13,7 @@ import com.yunusAhmet.rentACar.entity.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +33,7 @@ public class CustomerManagerTest {
     public void setUp() {
         customerDao = mock(CustomerDao.class);
         customerDtoConverter = mock(CustomerDtoConverter.class);
+
         customerManager = new CustomerManager(customerDao,customerDtoConverter);
     }
 
@@ -60,7 +62,7 @@ public class CustomerManagerTest {
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
-                request.getPassword(),
+               request.getPassword(),
                 request.getMatchingPassword());
         CustomerDto expected = new CustomerDto
                 (
