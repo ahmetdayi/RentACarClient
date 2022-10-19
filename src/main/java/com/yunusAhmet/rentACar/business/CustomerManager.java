@@ -22,12 +22,14 @@ public class CustomerManager implements UserDetailsService {
 
     private final CustomerDao customerDao;
 
+    private final BCryptPasswordEncoder passwordEncoder;
     private final CustomerDtoConverter customerDtoConverter;
 
 
 
-    public CustomerManager(CustomerDao customerDao, CustomerDtoConverter customerDtoConverter) {
+    public CustomerManager(CustomerDao customerDao, BCryptPasswordEncoder passwordEncoder, CustomerDtoConverter customerDtoConverter) {
         this.customerDao = customerDao;
+        this.passwordEncoder = passwordEncoder;
 
         this.customerDtoConverter = customerDtoConverter;
 
@@ -38,7 +40,7 @@ public class CustomerManager implements UserDetailsService {
     }
 
     public CustomerDto createCustomer(CreateCustomerRequest request){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         Optional<Customer> customer = customerDao.findCustomerByEmail(request.getEmail());
         if (customer.isPresent()) {
             throw new CustomerEmailAlreadyExistException(Constant.CUSTOMER_EMAIL_ALREADY_EXIST);

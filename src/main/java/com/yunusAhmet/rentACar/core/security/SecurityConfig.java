@@ -1,7 +1,7 @@
 package com.yunusAhmet.rentACar.core.security;
 
 
-import com.yunusAhmet.rentACar.business.CustomerManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -39,8 +38,9 @@ public class SecurityConfig {
                 cors().
                 and().
                 authorizeRequests(auth -> {
-            auth.antMatchers("/brand/**").hasAuthority("ADMIN");
-            auth.antMatchers("/car/**").hasAnyAuthority("ADMIN", "USER");
+            auth.antMatchers("/brand/**","/color/**").hasAuthority("ADMIN");
+            auth.antMatchers("/car/**","/rental/**","/image/**").hasAnyAuthority("ADMIN", "USER");
+
             auth.anyRequest().authenticated();
         }).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().
@@ -56,12 +56,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(final AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

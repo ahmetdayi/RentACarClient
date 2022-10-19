@@ -10,8 +10,10 @@ import com.yunusAhmet.rentACar.dto.*;
 
 import com.yunusAhmet.rentACar.dto.converter.CustomerDtoConverter;
 import com.yunusAhmet.rentACar.entity.Customer;
+import com.yunusAhmet.rentACar.entity.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class CustomerManagerTest {
 
     private CustomerDtoConverter customerDtoConverter;
 
+    private BCryptPasswordEncoder passwordEncoder;
     public CustomerManager customerManager;
 
 
@@ -33,8 +36,8 @@ public class CustomerManagerTest {
     public void setUp() {
         customerDao = mock(CustomerDao.class);
         customerDtoConverter = mock(CustomerDtoConverter.class);
-
-        customerManager = new CustomerManager(customerDao,customerDtoConverter);
+        passwordEncoder = mock(BCryptPasswordEncoder.class);
+        customerManager = new CustomerManager(customerDao, passwordEncoder, customerDtoConverter);
     }
 
     @Test
@@ -48,13 +51,16 @@ public class CustomerManagerTest {
                 "Ahmet.26"
                 );
 
+        String encodedPasword = passwordEncoder.encode(request.getPassword());
+        String encodedPasword2 = passwordEncoder.encode(request.getMatchingPassword());
         Customer customer= new Customer
                 (
                         request.getFirstName(),
                         request.getLastName(),
                         request.getEmail(),
-                        request.getPassword(),
-                        request.getMatchingPassword()
+                        encodedPasword,
+                        encodedPasword2,
+                        Role.USER
                 );
         Customer saveCustomer = new Customer
                 (
@@ -62,8 +68,8 @@ public class CustomerManagerTest {
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
-               request.getPassword(),
-                request.getMatchingPassword());
+                encodedPasword,encodedPasword2,
+                Role.USER);
         CustomerDto expected = new CustomerDto
                 (
                 1,
@@ -73,7 +79,8 @@ public class CustomerManagerTest {
               );
 
 
-
+        when(passwordEncoder.encode(request.getPassword())).thenReturn(encodedPasword);
+        when(passwordEncoder.encode(request.getMatchingPassword())).thenReturn(encodedPasword2);
         when(customerDao.save(customer)).thenReturn(saveCustomer);
         when(customerDtoConverter.convert(saveCustomer)).thenReturn(expected);
 
@@ -81,8 +88,11 @@ public class CustomerManagerTest {
         CustomerDto result= customerManager.createCustomer(request);
 
         assertEquals(expected,result);
+//        verify(passwordEncoder).encode(request.getPassword());
+//        verify(passwordEncoder).encode(request.getMatchingPassword());
         verify(customerDao).save(customer);
         verify(customerDtoConverter).convert(saveCustomer);
+
     }
 
     @Test
