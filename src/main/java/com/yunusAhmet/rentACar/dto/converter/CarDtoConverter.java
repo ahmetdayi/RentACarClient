@@ -1,6 +1,5 @@
 package com.yunusAhmet.rentACar.dto.converter;
 
-import com.yunusAhmet.rentACar.dto.BrandCarDto;
 import com.yunusAhmet.rentACar.dto.CarDto;
 import com.yunusAhmet.rentACar.entity.Car;
 import org.springframework.stereotype.Component;
@@ -14,9 +13,12 @@ public class CarDtoConverter {
     private final ColorDtoConverter colorDtoConverter;
     private final BrandDtoConverter brandDtoConverter;
 
-    public CarDtoConverter(ColorDtoConverter colorDtoConverter, BrandDtoConverter brandDtoConverter) {
+    private final ImageConverter imageConverter;
+
+    public CarDtoConverter(ColorDtoConverter colorDtoConverter, BrandDtoConverter brandDtoConverter, ImageConverter imageConverter) {
         this.colorDtoConverter = colorDtoConverter;
         this.brandDtoConverter = brandDtoConverter;
+        this.imageConverter = imageConverter;
     }
 
     public CarDto convert(Car from){
@@ -26,6 +28,7 @@ public class CarDtoConverter {
                 from.getDailyPrice(),
                 from.getProductYear(),
                 brandDtoConverter.convert(from.getBrand()),
+                imageConverter.converter(from.getImages()),
                 from.getCarColors().stream().map(colorDtoConverter::convert).collect(Collectors.toList())
                 );
     }
@@ -39,6 +42,7 @@ public class CarDtoConverter {
                         from.getDailyPrice(),
                         from.getProductYear(),
                         brandDtoConverter.convert(from.getBrand()),
+                        imageConverter.converter(from.getImages()),
                         from.getCarColors().stream().map(colorDtoConverter::convert).toList()
                         )
                 ).collect(Collectors.toList());

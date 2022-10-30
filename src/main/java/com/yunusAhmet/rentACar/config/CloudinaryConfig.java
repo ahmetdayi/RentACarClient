@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CouldinaryConfig {
+public class CloudinaryConfig {
 
     @Bean
    public Cloudinary cloudinaryAccount(){

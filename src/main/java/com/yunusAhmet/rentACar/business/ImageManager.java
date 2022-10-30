@@ -4,6 +4,8 @@ import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.core.exception.ImageNotFoundException;
 import com.yunusAhmet.rentACar.core.exception.MaxImageException;
 import com.yunusAhmet.rentACar.dataAccess.ImageDao;
+import com.yunusAhmet.rentACar.dto.ImageDto;
+import com.yunusAhmet.rentACar.dto.converter.ImageConverter;
 import com.yunusAhmet.rentACar.entity.Car;
 import com.yunusAhmet.rentACar.entity.Image;
 import org.springframework.stereotype.Service;
@@ -19,15 +21,18 @@ public class ImageManager  {
     private final ImageDao imageDao;
 
     private final CarManager carManager;
+
+    private final ImageConverter imageConverter;
     private final CloudStorageManager cloudStorageManager;
 
 
 
-    public ImageManager(ImageDao imageDao , CarManager carManager, CloudStorageManager cloudStorageManager, CustomerManager customerManager) {
+    public ImageManager(ImageDao imageDao , CarManager carManager, CloudStorageManager cloudStorageManager, CustomerManager customerManager, ImageConverter imageConverter) {
         this.imageDao = imageDao;
         this.carManager = carManager;
         this.cloudStorageManager = cloudStorageManager;
 
+        this.imageConverter = imageConverter;
     }
 
     protected Image getImageByImageId(int imageId){
@@ -49,13 +54,12 @@ public class ImageManager  {
         }
     }
 
-    public String addImage(MultipartFile multipartFile,int carId) {
+    public ImageDto addImage(MultipartFile multipartFile, int carId) {
         maxImageControl(carId);
         Map<?,?> upload = cloudStorageManager.upload(multipartFile);
         Car car =carManager.findCarByCarId(carId);
         Image image = new Image(upload.get("url").toString(),car);
-        imageDao.save(image);
-        return upload.get("url").toString();
+        return imageConverter.converter(imageDao.save(image));
     }
 
     public void deleteImageByImageId(int imageId){

@@ -58,6 +58,7 @@ public class RentalManagerTest {
                         car.getDailyPrice(),
                         car.getProductYear(),
                         brandDto,
+                        List.of(new ImageDto()),
                         colorDtos
                 );
 

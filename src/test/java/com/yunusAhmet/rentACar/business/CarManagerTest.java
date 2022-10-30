@@ -83,6 +83,7 @@ public class CarManagerTest {
                         request.getDailyPrice(),
                         request.getProductYear(),
                         brandDto,
+                        List.of(new ImageDto()),
                         colorDtos
                 );
 
@@ -137,8 +138,8 @@ public class CarManagerTest {
         List<ColorDto> colorsDto = List.of(new ColorDto(1,"black"),
                 new ColorDto(2,"blue"));
         List<CarDto> carsDto = List.of(new CarDto(1,"bmw",
-                1234L,"2001",brandDto,colorsDto),new CarDto(2,"audi",
-                2367L,"2020",brandDto,colorsDto));
+                1234L,"2001",brandDto,List.of(new ImageDto()),colorsDto),new CarDto(2,"audi",
+                2367L,"2020",brandDto,List.of(new ImageDto()),colorsDto));
 
         when(carDao.findAll()).thenReturn(cars);
         when(carDtoConverter.convert(cars)).thenReturn(carsDto);
@@ -192,6 +193,7 @@ public class CarManagerTest {
                         request.getDailyPrice(),
                         request.getProductYear(),
                         brandDto,
+                        List.of(new ImageDto()),
                         colorDtos
                 );
 

@@ -30,6 +30,8 @@ public class CarDto {
 
     private BrandDto brand;
 
+    private List<ImageDto> image;
+
     private List<ColorDto> carColors;
 
 
