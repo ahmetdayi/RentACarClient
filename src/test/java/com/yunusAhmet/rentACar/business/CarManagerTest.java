@@ -1,17 +1,20 @@
 package com.yunusAhmet.rentACar.business;
 
 
-import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
-import com.yunusAhmet.rentACar.dataAccess.CarDao;
-import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.dto.converter.BrandCarDtoConverter;
-import com.yunusAhmet.rentACar.dto.converter.CarDtoConverter;
-import com.yunusAhmet.rentACar.entity.Brand;
-import com.yunusAhmet.rentACar.entity.Car;
-import com.yunusAhmet.rentACar.entity.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.yunusahmet.rentacar.business.BrandManager;
+import com.yunusahmet.rentacar.business.CarManager;
+import com.yunusahmet.rentacar.business.ColorManager;
+import com.yunusahmet.rentacar.core.exception.CarNotFoundException;
+import com.yunusahmet.rentacar.dataAccess.CarDao;
+import com.yunusahmet.rentacar.dto.*;
+import com.yunusahmet.rentacar.dto.converter.BrandCarDtoConverter;
+import com.yunusahmet.rentacar.dto.converter.CarDtoConverter;
+import com.yunusahmet.rentacar.entity.Brand;
+import com.yunusahmet.rentacar.entity.Car;
+import com.yunusahmet.rentacar.entity.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -92,8 +95,7 @@ public class CarManagerTest {
 
         when(brandManager.getBrandByBrandId(brand.getBrandId())).thenReturn(brand);
 
-        when(colorManager.getColorByColorId(colorIds.get(0))).thenReturn(colors.get(0));
-        when(colorManager.getColorByColorId(colorIds.get(1))).thenReturn(colors.get(1));
+        when(colorManager.getColorsByColorIds(colorIds)).thenReturn(colors);
         when(carDao.save(car)).thenReturn(saveCar);
         when(carDtoConverter.convert(saveCar)).thenReturn(expected);
 
@@ -103,8 +105,7 @@ public class CarManagerTest {
 
         assertEquals(expected,result);
         verify(brandManager).getBrandByBrandId(brand.getBrandId());
-        verify(colorManager).getColorByColorId(colorIds.get(0));
-        verify(colorManager).getColorByColorId(colorIds.get(1));
+        verify(colorManager).getColorsByColorIds(colorIds);
         verify(carDao).save(car);
         verify(carDtoConverter).convert(saveCar);
 //          BrandDto brandDto=modelMapper.map(brand, BrandDto.class);

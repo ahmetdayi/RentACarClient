@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.dto;
+package com.yunusahmet.rentacar.dto;
 
 
 import lombok.AllArgsConstructor;

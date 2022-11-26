@@ -1,8 +1,9 @@
-package com.yunusAhmet.rentACar.config;
+package com.yunusahmet.rentacar.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.yunusAhmet.rentACar.business.CloudStorageManager;
+import com.yunusahmet.rentacar.business.CloudStorageManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

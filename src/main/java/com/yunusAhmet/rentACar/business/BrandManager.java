@@ -1,16 +1,14 @@
-package com.yunusAhmet.rentACar.business;
-
-import com.yunusAhmet.rentACar.core.exception.BrandAlreadyExistException;
-import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.dataAccess.BrandDao;
-import com.yunusAhmet.rentACar.dto.*;
-
-import com.yunusAhmet.rentACar.dto.converter.BrandDtoConverter;
-import com.yunusAhmet.rentACar.entity.Brand;
+package com.yunusahmet.rentacar.business;
 
 import org.springframework.stereotype.Service;
 
+import com.yunusahmet.rentacar.core.constant.Constant;
+import com.yunusahmet.rentacar.core.exception.BrandAlreadyExistException;
+import com.yunusahmet.rentacar.core.exception.BrandNotFoundException;
+import com.yunusahmet.rentacar.dataAccess.BrandDao;
+import com.yunusahmet.rentacar.dto.*;
+import com.yunusahmet.rentacar.dto.converter.BrandDtoConverter;
+import com.yunusahmet.rentacar.entity.Brand;
 
 import java.util.Optional;
 
@@ -32,7 +30,7 @@ public class BrandManager {
 
     }
 
-    protected Brand getBrandByBrandId(int brandId){
+    public Brand getBrandByBrandId(int brandId){
        return brandDao.findById(brandId).orElseThrow(() -> new BrandNotFoundException(Constant.BRAND_NOT_FOUND));
     }
     public BrandDto createBrand(CreateBrandRequest request){

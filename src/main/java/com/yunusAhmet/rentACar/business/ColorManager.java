@@ -1,16 +1,15 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
-
-import com.yunusAhmet.rentACar.core.exception.ColorAlreadyExistException;
-import com.yunusAhmet.rentACar.core.exception.ColorNotFoundException;
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.dataAccess.ColorDao;
-import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.dto.converter.ColorDtoConverter;
-
-import com.yunusAhmet.rentACar.entity.Color;
 
 import org.springframework.stereotype.Service;
+
+import com.yunusahmet.rentacar.core.constant.Constant;
+import com.yunusahmet.rentacar.core.exception.ColorAlreadyExistException;
+import com.yunusahmet.rentacar.core.exception.ColorNotFoundException;
+import com.yunusahmet.rentacar.dataAccess.ColorDao;
+import com.yunusahmet.rentacar.dto.*;
+import com.yunusahmet.rentacar.dto.converter.ColorDtoConverter;
+import com.yunusahmet.rentacar.entity.Color;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,11 +26,11 @@ public class ColorManager {
         this.converter = converter;
 
     }
-    protected Color getColorByColorId(int colorId){
+    public Color getColorByColorId(int colorId){
         return colorDao.findById(colorId).orElseThrow(() -> new ColorNotFoundException(Constant.COLOR_NOT_FOUND));
     }
 
-    protected List<Color> getColorsByColorIds(List<Integer> colorIds){
+    public List<Color> getColorsByColorIds(List<Integer> colorIds){
         return colorDao.
                 findColorsByColorIdIn(colorIds).orElseThrow(()->new ColorNotFoundException(Constant.COLOR_NOT_FOUND));
     }

@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.core.constant;
+package com.yunusahmet.rentacar.core.constant;
 
 public class Constant {
 

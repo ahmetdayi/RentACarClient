@@ -1,15 +1,17 @@
-package com.yunusAhmet.rentACar.controller;
+package com.yunusahmet.rentacar.controller;
 
 
-import com.yunusAhmet.rentACar.business.AuthManager;
-import com.yunusAhmet.rentACar.dto.LoginRequest;
-import com.yunusAhmet.rentACar.dto.LoginResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.yunusahmet.rentacar.business.AuthManager;
+import com.yunusahmet.rentacar.dto.LoginRequest;
+import com.yunusahmet.rentacar.dto.LoginResponse;
 
 import javax.validation.Valid;
 

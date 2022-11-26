@@ -1,11 +1,12 @@
-package com.yunusAhmet.rentACar.core.security;
+package com.yunusahmet.rentacar.core.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.core.exception.TokenNotValidException;
+import com.yunusahmet.rentacar.core.constant.Constant;
+import com.yunusahmet.rentacar.core.exception.TokenNotValidException;
+
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.security.core.Authentication;

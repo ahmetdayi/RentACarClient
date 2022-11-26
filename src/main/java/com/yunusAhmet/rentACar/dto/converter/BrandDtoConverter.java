@@ -1,8 +1,9 @@
-package com.yunusAhmet.rentACar.dto.converter;
+package com.yunusahmet.rentacar.dto.converter;
 
-import com.yunusAhmet.rentACar.dto.BrandDto;
-import com.yunusAhmet.rentACar.entity.Brand;
 import org.springframework.stereotype.Component;
+
+import com.yunusahmet.rentacar.dto.BrandDto;
+import com.yunusahmet.rentacar.entity.Brand;
 
 @Component
 public class BrandDtoConverter {

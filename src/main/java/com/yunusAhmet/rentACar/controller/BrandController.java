@@ -1,11 +1,12 @@
-package com.yunusAhmet.rentACar.controller;
+package com.yunusahmet.rentacar.controller;
 
 
-import com.yunusAhmet.rentACar.business.BrandManager;
-import com.yunusAhmet.rentACar.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.yunusahmet.rentacar.business.BrandManager;
+import com.yunusahmet.rentacar.dto.*;
 
 import javax.validation.Valid;
 

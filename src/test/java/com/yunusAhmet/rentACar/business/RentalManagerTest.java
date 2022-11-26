@@ -1,17 +1,23 @@
 package com.yunusAhmet.rentACar.business;
 
 
-import com.yunusAhmet.rentACar.core.exception.CarNotDeliverException;
-import com.yunusAhmet.rentACar.core.exception.CustomerAlreadyRentACar;
-import com.yunusAhmet.rentACar.core.exception.WrongReturnDateException;
-import com.yunusAhmet.rentACar.dataAccess.RentalDao;
-import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.dto.converter.RentCarDtoConverter;
-import com.yunusAhmet.rentACar.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.yunusahmet.rentacar.business.CarManager;
+import com.yunusahmet.rentacar.business.CustomerManager;
+import com.yunusahmet.rentacar.business.RentalManager;
+import com.yunusahmet.rentacar.core.exception.CarNotDeliverException;
+import com.yunusahmet.rentacar.core.exception.CustomerAlreadyRentACar;
+import com.yunusahmet.rentacar.core.exception.WrongReturnDateException;
+import com.yunusahmet.rentacar.dataAccess.RentalDao;
+import com.yunusahmet.rentacar.dto.*;
+import com.yunusahmet.rentacar.dto.converter.RentCarDtoConverter;
+import com.yunusahmet.rentacar.entity.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -72,20 +78,13 @@ public class RentalManagerTest {
         Rental rental = new Rental(LocalDateTime.now().withNano(0),LocalDateTime.of(2023,12,12,12,24,10),customer,car);
         Rental saveRental = new Rental(1,rental.getRentDate(),rental.getReturnDate(),customer,car);
 
-        List<Rental> rentals = List.of(
-                new Rental(
-                        3,
-                        LocalDateTime.now(),
-                        LocalDateTime.of(2023,12,12,12,24,30),
-                        new Customer(2,"ali","genc","AliGenc.26","AliGenc.26"),
-                        new Car(3,"audi",brand))
-        );
 
         RentCarDto expected = new RentCarDto(saveRental.getRentalId(),rental.getRentDate(),rental.getReturnDate(),customerDto,carDto);
 
         when(carManager.findCarByCarId(car.getCarId())).thenReturn(car);
         when(customerManager.getCustomerByCustomerId(customer.getCustomerId())).thenReturn(customer);
-        when(rentalDao.findAll()).thenReturn(rentals);
+        when(rentalDao.getRentalByCar_CarId(car.getCarId())).thenReturn(Optional.empty());
+        when(rentalDao.getRentalByCustomer_CustomerId(customer.getCustomerId())).thenReturn(Optional.empty());
         when(rentalDao.save(rental)).thenReturn(saveRental);
         when(carDtoConverter.convert(saveRental)).thenReturn(expected);
 
@@ -94,7 +93,8 @@ public class RentalManagerTest {
         assertEquals(expected,result);
         verify(carManager).findCarByCarId(car.getCarId());
         verify(customerManager).getCustomerByCustomerId(customer.getCustomerId());
-        verify(rentalDao).findAll();
+       verify(rentalDao).getRentalByCar_CarId(car.getCarId());
+       verify(rentalDao).getRentalByCustomer_CustomerId(customer.getCustomerId());
         verify(rentalDao).save(rental);
         verify(carDtoConverter).convert(saveRental);
 
@@ -132,26 +132,29 @@ public class RentalManagerTest {
         List<Color> colors = List.of(new Color(1,"black"),
                 new Color(2,"blue"));
         Car car = new Car(2,"bmw",1234L,"2001",brand,colors);
-        List<Rental> rentals = List.of(
-                new Rental(
-                        3,
-                        LocalDateTime.now(),
-                        LocalDateTime.of(2023,12,12,12,24,30),
-                        new Customer(1,"ali","genc","AliGenc.26","AliGenc.26"),
-                        new Car(3,"audi",brand))
-        );
+
+        Rental rental = new Rental(
+                3,
+                LocalDateTime.now(),
+                LocalDateTime.of(2023, 12, 12, 12, 24, 30),
+                new Customer(1, "ali", "genc", "AliGenc.26", "AliGenc.26"),
+                new Car(3, "audi", brand));
 
 
         when(carManager.findCarByCarId(car.getCarId())).thenReturn(car);
         when(customerManager.getCustomerByCustomerId(customer.getCustomerId())).thenReturn(customer);
-        when(rentalDao.findAll()).thenReturn(rentals);
+        when(rentalDao.getRentalByCar_CarId(car.getCarId())).thenReturn(Optional.empty());
+        when(rentalDao.getRentalByCustomer_CustomerId(customer.getCustomerId())).thenReturn(Optional.of(rental));
+
 
 
         assertThrows(CustomerAlreadyRentACar.class,()->rentalManager.rentACar(request));
 
         verify(carManager).findCarByCarId(car.getCarId());
         verify(customerManager).getCustomerByCustomerId(customer.getCustomerId());
-        verify(rentalDao).findAll();
+        verify(rentalDao).getRentalByCar_CarId(car.getCarId());
+        verify(rentalDao).getRentalByCustomer_CustomerId(customer.getCustomerId());
+
 
 
     }
@@ -165,26 +168,27 @@ public class RentalManagerTest {
         List<Color> colors = List.of(new Color(1,"black"),
                 new Color(2,"blue"));
         Car car = new Car(2,"bmw",1234L,"2001",brand,colors);
-        List<Rental> rentals = List.of(
-                new Rental(
-                        3,
-                        LocalDateTime.now(),
-                        LocalDateTime.of(2023,12,12,12,24,30),
-                        new Customer(2,"ali","genc","AliGenc.26","AliGenc.26"),
-                        new Car(2,"audi",brand))
-        );
+
+        Rental rental = new Rental(
+                3,
+                LocalDateTime.now(),
+                LocalDateTime.of(2023, 12, 12, 12, 24, 30),
+                new Customer(2, "ali", "genc", "AliGenc.26", "AliGenc.26"),
+                new Car(2, "audi", brand));
 
 
         when(carManager.findCarByCarId(car.getCarId())).thenReturn(car);
         when(customerManager.getCustomerByCustomerId(customer.getCustomerId())).thenReturn(customer);
-        when(rentalDao.findAll()).thenReturn(rentals);
+        when(rentalDao.getRentalByCar_CarId(car.getCarId())).thenReturn(Optional.of(rental));
+
 
 
         assertThrows(CarNotDeliverException.class,()->rentalManager.rentACar(request));
 
         verify(carManager).findCarByCarId(car.getCarId());
         verify(customerManager).getCustomerByCustomerId(customer.getCustomerId());
-        verify(rentalDao).findAll();
+        verify(rentalDao).getRentalByCar_CarId(car.getCarId());
+
     }
 
 }

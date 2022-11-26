@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.core.validator;
+package com.yunusahmet.rentacar.core.validator;
 
 import com.google.common.base.Joiner;
 

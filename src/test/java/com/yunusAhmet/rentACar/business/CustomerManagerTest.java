@@ -2,19 +2,18 @@ package com.yunusAhmet.rentACar.business;
 
 
 
-import com.yunusAhmet.rentACar.core.exception.CustomerEmailAlreadyExistException;
-import com.yunusAhmet.rentACar.core.exception.CustomerNotFoundException;
-
-import com.yunusAhmet.rentACar.dataAccess.CustomerDao;
-import com.yunusAhmet.rentACar.dto.*;
-
-import com.yunusAhmet.rentACar.dto.converter.CustomerDtoConverter;
-import com.yunusAhmet.rentACar.entity.Customer;
-import com.yunusAhmet.rentACar.entity.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.yunusahmet.rentacar.business.CustomerManager;
+import com.yunusahmet.rentacar.core.exception.CustomerEmailAlreadyExistException;
+import com.yunusahmet.rentacar.core.exception.CustomerNotFoundException;
+import com.yunusahmet.rentacar.dataAccess.CustomerDao;
+import com.yunusahmet.rentacar.dto.*;
+import com.yunusahmet.rentacar.dto.converter.CustomerDtoConverter;
+import com.yunusahmet.rentacar.entity.Customer;
+import com.yunusahmet.rentacar.entity.Role;
 
 import java.util.Optional;
 

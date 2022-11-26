@@ -1,19 +1,20 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.core.exception.CustomerEmailAlreadyExistException;
-import com.yunusAhmet.rentACar.core.exception.CustomerNotFoundException;
-import com.yunusAhmet.rentACar.dataAccess.CustomerDao;
-import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.dto.converter.CustomerDtoConverter;
-import com.yunusAhmet.rentACar.entity.Customer;
-import com.yunusAhmet.rentACar.entity.Role;
-import com.yunusAhmet.rentACar.entity.SecurityCustomer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.yunusahmet.rentacar.core.constant.Constant;
+import com.yunusahmet.rentacar.core.exception.CustomerEmailAlreadyExistException;
+import com.yunusahmet.rentacar.core.exception.CustomerNotFoundException;
+import com.yunusahmet.rentacar.dataAccess.CustomerDao;
+import com.yunusahmet.rentacar.dto.*;
+import com.yunusahmet.rentacar.dto.converter.CustomerDtoConverter;
+import com.yunusahmet.rentacar.entity.Customer;
+import com.yunusahmet.rentacar.entity.Role;
+import com.yunusahmet.rentacar.entity.SecurityCustomer;
 
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class CustomerManager implements UserDetailsService {
 
     }
 
-    protected Customer getCustomerByCustomerId(int customerId){
+    public Customer getCustomerByCustomerId(int customerId){
         return customerDao.findById(customerId).orElseThrow(() -> new CustomerNotFoundException(Constant.CUSTOMER_NOT_FOUND));
     }
 

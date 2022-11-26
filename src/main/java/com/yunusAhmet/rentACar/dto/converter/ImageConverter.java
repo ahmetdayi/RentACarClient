@@ -1,8 +1,9 @@
-package com.yunusAhmet.rentACar.dto.converter;
+package com.yunusahmet.rentacar.dto.converter;
 
-import com.yunusAhmet.rentACar.dto.ImageDto;
-import com.yunusAhmet.rentACar.entity.Image;
 import org.springframework.stereotype.Component;
+
+import com.yunusahmet.rentacar.dto.ImageDto;
+import com.yunusahmet.rentacar.entity.Image;
 
 import java.util.List;
 import java.util.stream.Collectors;

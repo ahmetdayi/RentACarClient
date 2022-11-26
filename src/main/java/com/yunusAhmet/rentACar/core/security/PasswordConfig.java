@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.core.security;
+package com.yunusahmet.rentacar.core.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

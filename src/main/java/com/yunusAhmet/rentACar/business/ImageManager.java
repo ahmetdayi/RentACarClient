@@ -1,17 +1,18 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.core.exception.CarHasNotImageException;
-import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
-import com.yunusAhmet.rentACar.core.exception.ImageNotFoundException;
-import com.yunusAhmet.rentACar.core.exception.MaxImageException;
-import com.yunusAhmet.rentACar.dataAccess.ImageDao;
-import com.yunusAhmet.rentACar.dto.ImageDto;
-import com.yunusAhmet.rentACar.dto.converter.ImageConverter;
-import com.yunusAhmet.rentACar.entity.Car;
-import com.yunusAhmet.rentACar.entity.Image;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.yunusahmet.rentacar.core.constant.Constant;
+import com.yunusahmet.rentacar.core.exception.CarHasNotImageException;
+import com.yunusahmet.rentacar.core.exception.CarNotFoundException;
+import com.yunusahmet.rentacar.core.exception.ImageNotFoundException;
+import com.yunusahmet.rentacar.core.exception.MaxImageException;
+import com.yunusahmet.rentacar.dataAccess.ImageDao;
+import com.yunusahmet.rentacar.dto.ImageDto;
+import com.yunusahmet.rentacar.dto.converter.ImageConverter;
+import com.yunusahmet.rentacar.entity.Car;
+import com.yunusahmet.rentacar.entity.Image;
 
 import java.util.List;
 import java.util.Map;

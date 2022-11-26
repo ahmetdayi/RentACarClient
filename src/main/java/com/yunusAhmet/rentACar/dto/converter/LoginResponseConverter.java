@@ -1,7 +1,8 @@
-package com.yunusAhmet.rentACar.dto.converter;
+package com.yunusahmet.rentacar.dto.converter;
 
-import com.yunusAhmet.rentACar.dto.LoginResponse;
 import org.springframework.stereotype.Component;
+
+import com.yunusahmet.rentacar.dto.LoginResponse;
 
 @Component
 public class LoginResponseConverter {

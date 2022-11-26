@@ -1,13 +1,14 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
-import com.yunusAhmet.rentACar.core.security.JwtUtil;
-import com.yunusAhmet.rentACar.dto.LoginRequest;
-import com.yunusAhmet.rentACar.dto.LoginResponse;
-import com.yunusAhmet.rentACar.dto.converter.LoginResponseConverter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import com.yunusahmet.rentacar.core.security.JwtUtil;
+import com.yunusahmet.rentacar.dto.LoginRequest;
+import com.yunusahmet.rentacar.dto.LoginResponse;
+import com.yunusahmet.rentacar.dto.converter.LoginResponseConverter;
 
 @Service
 public class AuthManager {

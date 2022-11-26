@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.core.exception;
+package com.yunusahmet.rentacar.core.exception;
 
 
 

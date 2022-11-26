@@ -1,21 +1,20 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
-import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
-import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
-import com.yunusAhmet.rentACar.core.constant.Constant;
-import com.yunusAhmet.rentACar.dataAccess.CarDao;
-import com.yunusAhmet.rentACar.dto.BrandCarDto;
-import com.yunusAhmet.rentACar.dto.CarDto;
-import com.yunusAhmet.rentACar.dto.CreateCarRequest;
-
-import com.yunusAhmet.rentACar.dto.UpdateCarRequest;
-import com.yunusAhmet.rentACar.dto.converter.BrandCarDtoConverter;
-import com.yunusAhmet.rentACar.dto.converter.CarDtoConverter;
-import com.yunusAhmet.rentACar.entity.Brand;
-import com.yunusAhmet.rentACar.entity.Car;
-import com.yunusAhmet.rentACar.entity.Color;
 import org.springframework.stereotype.Service;
 
+import com.yunusahmet.rentacar.core.constant.Constant;
+import com.yunusahmet.rentacar.core.exception.BrandNotFoundException;
+import com.yunusahmet.rentacar.core.exception.CarNotFoundException;
+import com.yunusahmet.rentacar.dataAccess.CarDao;
+import com.yunusahmet.rentacar.dto.BrandCarDto;
+import com.yunusahmet.rentacar.dto.CarDto;
+import com.yunusahmet.rentacar.dto.CreateCarRequest;
+import com.yunusahmet.rentacar.dto.UpdateCarRequest;
+import com.yunusahmet.rentacar.dto.converter.BrandCarDtoConverter;
+import com.yunusahmet.rentacar.dto.converter.CarDtoConverter;
+import com.yunusahmet.rentacar.entity.Brand;
+import com.yunusahmet.rentacar.entity.Car;
+import com.yunusahmet.rentacar.entity.Color;
 
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class CarManager {
     }
 
 
-    protected Car findCarByCarId(int carId){
+    public Car findCarByCarId(int carId){
         return carDao.findById(carId).orElseThrow(() -> new CarNotFoundException(Constant.CAR_NOT_FOUND));
     }
 

@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.dto;
+package com.yunusahmet.rentacar.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotBlank;
+
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Data
 @AllArgsConstructor

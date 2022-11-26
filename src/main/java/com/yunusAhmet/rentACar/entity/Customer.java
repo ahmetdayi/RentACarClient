@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.entity;
+package com.yunusahmet.rentacar.entity;
 
 
 import lombok.AllArgsConstructor;

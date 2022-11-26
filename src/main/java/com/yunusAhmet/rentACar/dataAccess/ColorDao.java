@@ -1,7 +1,8 @@
-package com.yunusAhmet.rentACar.dataAccess;
+package com.yunusahmet.rentacar.dataAccess;
 
-import com.yunusAhmet.rentACar.entity.Color;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.yunusahmet.rentacar.entity.Color;
 
 import java.util.List;
 import java.util.Optional;

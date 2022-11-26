@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
