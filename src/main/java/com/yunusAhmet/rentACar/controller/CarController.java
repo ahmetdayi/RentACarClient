@@ -1,6 +1,7 @@
 package com.yunusAhmet.rentACar.controller;
 
 import com.yunusAhmet.rentACar.business.CarManager;
+import com.yunusAhmet.rentACar.dto.BrandCarDto;
 import com.yunusAhmet.rentACar.dto.CarDto;
 import com.yunusAhmet.rentACar.dto.CreateCarRequest;
 import com.yunusAhmet.rentACar.dto.UpdateCarRequest;
@@ -24,6 +25,10 @@ public class CarController {
     @PostMapping()
     public ResponseEntity<CarDto> createCar(@Valid @RequestBody CreateCarRequest request){
         return new ResponseEntity<>(carManager.createCar(request),HttpStatus.CREATED);
+    }
+    @GetMapping("/{brandId}")
+    public ResponseEntity<List<BrandCarDto>> getAllCarByBrandId(@PathVariable int brandId){
+        return ResponseEntity.ok(carManager.getCarsByBrandId(brandId));
     }
 
     @GetMapping

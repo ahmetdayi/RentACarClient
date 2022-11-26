@@ -16,4 +16,5 @@ public class Constant {
     public static final String IMAGE_NOT_FOUND = "Image Id Not Found";
     public static final String MAX_IMAGE_LESS_THAN_SIX = "You Must Upload Max Five Image ";
     public static final String TOKEN_NOT_VALID = "Token Not Valid";
+    public static final String CAR_HAS_NOT_IMAGE = "Car Has Not Image";
 }

@@ -60,6 +60,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ImageNotFoundException.class)
     public ResponseEntity<?> imageNotFoundExceptionHandler(ImageNotFoundException exception)  {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }@ExceptionHandler(CarHasNotImageException.class)
+    public ResponseEntity<?> carHasNotImageExceptionHandler(CarHasNotImageException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(ColorAlreadyExistException.class)
     public ResponseEntity<?> colorAlreadyExistExceptionHandler(ColorAlreadyExistException exception)  {

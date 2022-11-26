@@ -1,6 +1,8 @@
 package com.yunusAhmet.rentACar.business;
 
 import com.yunusAhmet.rentACar.core.constant.Constant;
+import com.yunusAhmet.rentACar.core.exception.CarHasNotImageException;
+import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
 import com.yunusAhmet.rentACar.core.exception.ImageNotFoundException;
 import com.yunusAhmet.rentACar.core.exception.MaxImageException;
 import com.yunusAhmet.rentACar.dataAccess.ImageDao;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 
+
 @Service
 public class ImageManager  {
 
@@ -27,7 +30,15 @@ public class ImageManager  {
 
 
 
-    public ImageManager(ImageDao imageDao , CarManager carManager, CloudStorageManager cloudStorageManager, CustomerManager customerManager, ImageConverter imageConverter) {
+    public ImageManager
+            (
+                    ImageDao imageDao ,
+             CarManager carManager,
+             CloudStorageManager cloudStorageManager,
+             ImageConverter imageConverter
+            )
+    {
+
         this.imageDao = imageDao;
         this.carManager = carManager;
         this.cloudStorageManager = cloudStorageManager;
@@ -40,17 +51,14 @@ public class ImageManager  {
     }
 
     protected void maxImageControl(int carId){
-        List<Image> images =imageDao.findAll();
-        List<Integer> carIds = images.stream().map(Image::getCar).map(Car::getCarId).toList();
-        int count =1;
-
-        for (Integer id : carIds) {
-            if (id == carId) {
-                count++;
-                if (count == 6) {
-                    throw new MaxImageException(Constant.MAX_IMAGE_LESS_THAN_SIX);
-                }
-            }
+        List<Image> images =
+                imageDao.getImagesByCar_CarId(carId).orElseThrow(
+                        () -> new CarNotFoundException(Constant.CAR_NOT_FOUND));
+        if(images.size()==6){
+            throw new MaxImageException(Constant.MAX_IMAGE_LESS_THAN_SIX);
+        }
+        if(images.size()==0){
+            throw new CarHasNotImageException(Constant.CAR_HAS_NOT_IMAGE);
         }
     }
 

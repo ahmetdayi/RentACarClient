@@ -4,14 +4,13 @@ import com.yunusAhmet.rentACar.core.exception.BrandAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.BrandDao;
 import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.dto.converter.BrandCarDtoConverter;
+
 import com.yunusAhmet.rentACar.dto.converter.BrandDtoConverter;
 import com.yunusAhmet.rentACar.entity.Brand;
-import com.yunusAhmet.rentACar.entity.Car;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,15 +18,15 @@ import static org.mockito.Mockito.*;
 public class BrandManagerTest {
 
     private BrandDao brandDao;
-    private BrandCarDtoConverter brandCarDtoConverter;
     private BrandDtoConverter brandDtoConverter;
     private BrandManager brandManager;
+
+
     @BeforeEach
     void setUp() {
         brandDao = mock(BrandDao.class);
         brandDtoConverter = mock(BrandDtoConverter.class);
-        brandCarDtoConverter = mock(BrandCarDtoConverter.class);
-        brandManager = new BrandManager(brandDao,brandDtoConverter, brandCarDtoConverter);
+        brandManager = new BrandManager(brandDao, brandDtoConverter);
     }
             @Test
             public void testCreateBrand_whenMustNotFindSameBrandInDataBase_shouldReturnBrandDto(){
@@ -99,30 +98,6 @@ public class BrandManagerTest {
 
         verify(brandDao).findBrandByBrandName(request.getBrandName());}
 
-    @Test
-    public void testGetAllCar_whenGiveBrandIdExists_shouldReturnListOfCar(){
-        int brandId=2;
-        Car car = new Car(1, "bmw",new Brand(2,"a8"));
-        Car car1 = new Car(2, "audi",new Brand(2,"a8"));
-        BrandCarDto brandCarDto = new BrandCarDto(car.getCarId(), car.getCarName());
-        BrandCarDto brandCarDto1 = new BrandCarDto(car1.getCarId(), car1.getCarName());
-
-        List<BrandCarDto> brandCarDtos = Arrays.asList(brandCarDto,brandCarDto1);
-
-        Brand brand= new Brand(2,"a8",Arrays.asList(car,car1));
-        List<Car> cars = Arrays.asList(car,car1);
-
-
-        when(brandDao.findById(brandId)).thenReturn(Optional.of(brand));
-        when(brandCarDtoConverter.convert(cars)).thenReturn(brandCarDtos);
-
-        List<BrandCarDto> result = brandManager.getAllCarByBrandId(brandId);
-        assertEquals(brandCarDtos,result);
-
-        verify(brandDao).findById(brandId);
-        verify(brandCarDtoConverter).convert(cars);
-
-    }
 
     @Test
     public void testDeleteBrand_whenBrandIdExists_shouldDeleteBrand(){

@@ -5,16 +5,14 @@ import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
 import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.dataAccess.BrandDao;
 import com.yunusAhmet.rentACar.dto.*;
-import com.yunusAhmet.rentACar.dto.converter.BrandCarDtoConverter;
+
 import com.yunusAhmet.rentACar.dto.converter.BrandDtoConverter;
 import com.yunusAhmet.rentACar.entity.Brand;
-import com.yunusAhmet.rentACar.entity.Car;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -22,16 +20,15 @@ public class BrandManager {
 
     private final BrandDao brandDao;
     private final BrandDtoConverter brandDtoConverter;
-    private final BrandCarDtoConverter brandCarDtoConverter;
 
 
     public BrandManager(
             BrandDao brandDao,
-            BrandDtoConverter brandDtoConverter,
-            BrandCarDtoConverter brandCarDtoConverter) {
+            BrandDtoConverter brandDtoConverter
+            ) {
         this.brandDao = brandDao;
         this.brandDtoConverter = brandDtoConverter;
-        this.brandCarDtoConverter = brandCarDtoConverter;
+
 
     }
 
@@ -64,14 +61,7 @@ public class BrandManager {
     }
 
 
-    public List<BrandCarDto> getAllCarByBrandId(int brandId) {
-      Brand brand =getBrandByBrandId(brandId);
 
-      List<Car> cars= brand.getCar();
-
-     return brandCarDtoConverter.convert(cars);
-
-    }
 
 
 }

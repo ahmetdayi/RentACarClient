@@ -1,17 +1,18 @@
 package com.yunusAhmet.rentACar.business;
 
-import com.yunusAhmet.rentACar.core.exception.BrandAlreadyExistException;
+
 import com.yunusAhmet.rentACar.core.exception.ColorAlreadyExistException;
 import com.yunusAhmet.rentACar.core.exception.ColorNotFoundException;
 import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.dataAccess.ColorDao;
 import com.yunusAhmet.rentACar.dto.*;
 import com.yunusAhmet.rentACar.dto.converter.ColorDtoConverter;
-import com.yunusAhmet.rentACar.entity.Brand;
+
 import com.yunusAhmet.rentACar.entity.Color;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,11 @@ public class ColorManager {
     }
     protected Color getColorByColorId(int colorId){
         return colorDao.findById(colorId).orElseThrow(() -> new ColorNotFoundException(Constant.COLOR_NOT_FOUND));
+    }
+
+    protected List<Color> getColorsByColorIds(List<Integer> colorIds){
+        return colorDao.
+                findColorsByColorIdIn(colorIds).orElseThrow(()->new ColorNotFoundException(Constant.COLOR_NOT_FOUND));
     }
 
 

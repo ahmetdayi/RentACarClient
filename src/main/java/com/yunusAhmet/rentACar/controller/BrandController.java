@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+
 
 @RequestMapping("/brand")
 @RestController
@@ -18,11 +18,6 @@ public class BrandController {
 
     public BrandController(BrandManager brandManager) {
         this.brandManager = brandManager;
-    }
-
-    @GetMapping("/{brandId}")
-    public ResponseEntity<List<BrandCarDto>> getAllCarByBrandId(@PathVariable int brandId){
-        return ResponseEntity.ok(brandManager.getAllCarByBrandId(brandId));
     }
 
     @PostMapping

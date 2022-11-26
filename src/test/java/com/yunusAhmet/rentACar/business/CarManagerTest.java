@@ -4,6 +4,7 @@ package com.yunusAhmet.rentACar.business;
 import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
 import com.yunusAhmet.rentACar.dataAccess.CarDao;
 import com.yunusAhmet.rentACar.dto.*;
+import com.yunusAhmet.rentACar.dto.converter.BrandCarDtoConverter;
 import com.yunusAhmet.rentACar.dto.converter.CarDtoConverter;
 import com.yunusAhmet.rentACar.entity.Brand;
 import com.yunusAhmet.rentACar.entity.Car;
@@ -25,6 +26,7 @@ public class CarManagerTest {
     private CarDao carDao;
     private BrandManager brandManager;
     private ColorManager colorManager;
+    private BrandCarDtoConverter brandCarDtoConverter;
 
     private CarDtoConverter carDtoConverter;
 
@@ -35,8 +37,8 @@ public class CarManagerTest {
         brandManager = mock(BrandManager.class);
         colorManager = mock(ColorManager.class);
         carDtoConverter = mock(CarDtoConverter.class);
-
-        carManager = new CarManager(carDao,brandManager,colorManager,carDtoConverter);
+        brandCarDtoConverter = mock(BrandCarDtoConverter.class);
+        carManager = new CarManager(carDao,brandManager,colorManager, brandCarDtoConverter, carDtoConverter);
 
 
     }
@@ -123,6 +125,29 @@ public class CarManagerTest {
 
         verify(carDao).findById(carId);
         verify(carDao).deleteById(car.getCarId());
+    }
+
+    @Test
+    public void testGetAllCar_whenGiveBrandIdExists_shouldReturnListOfCar(){
+        int brandId=2;
+        Car car = new Car(1, "bmw",new Brand(2,"a8"));
+        Car car1 = new Car(2, "audi",new Brand(2,"a8"));
+        BrandCarDto brandCarDto = new BrandCarDto(car.getCarId(), car.getCarName());
+        BrandCarDto brandCarDto1 = new BrandCarDto(car1.getCarId(), car1.getCarName());
+
+        List<BrandCarDto> brandCarDtos = Arrays.asList(brandCarDto,brandCarDto1);
+        List<Car> cars = Arrays.asList(car,car1);
+
+
+        when(carDao.getCarsByBrand_BrandId(brandId)).thenReturn(Optional.of(cars));
+        when(brandCarDtoConverter.convert(cars)).thenReturn(brandCarDtos);
+
+        List<BrandCarDto> result = carManager.getCarsByBrandId(brandId);
+        assertEquals(brandCarDtos,result);
+
+        verify(carDao).getCarsByBrand_BrandId(brandId);
+        verify(brandCarDtoConverter).convert(cars);
+
     }
 
     @Test

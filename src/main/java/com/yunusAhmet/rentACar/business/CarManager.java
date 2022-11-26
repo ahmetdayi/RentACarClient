@@ -1,12 +1,15 @@
 package com.yunusAhmet.rentACar.business;
 
+import com.yunusAhmet.rentACar.core.exception.BrandNotFoundException;
 import com.yunusAhmet.rentACar.core.exception.CarNotFoundException;
 import com.yunusAhmet.rentACar.core.constant.Constant;
 import com.yunusAhmet.rentACar.dataAccess.CarDao;
+import com.yunusAhmet.rentACar.dto.BrandCarDto;
 import com.yunusAhmet.rentACar.dto.CarDto;
 import com.yunusAhmet.rentACar.dto.CreateCarRequest;
 
 import com.yunusAhmet.rentACar.dto.UpdateCarRequest;
+import com.yunusAhmet.rentACar.dto.converter.BrandCarDtoConverter;
 import com.yunusAhmet.rentACar.dto.converter.CarDtoConverter;
 import com.yunusAhmet.rentACar.entity.Brand;
 import com.yunusAhmet.rentACar.entity.Car;
@@ -25,6 +28,7 @@ public class CarManager {
     private final BrandManager brandManager;
     private final ColorManager colorManager;
 
+    private final BrandCarDtoConverter brandCarDtoConverter;
     private final CarDtoConverter carDtoConverter;
 
 
@@ -32,11 +36,12 @@ public class CarManager {
             CarDao carDao,
             BrandManager brandManager,
             ColorManager colorManager,
-            CarDtoConverter carDtoConverter) {
+            BrandCarDtoConverter brandCarDtoConverter, CarDtoConverter carDtoConverter) {
 
         this.carDao = carDao;
         this.brandManager = brandManager;
         this.colorManager = colorManager;
+        this.brandCarDtoConverter = brandCarDtoConverter;
         this.carDtoConverter = carDtoConverter;
 
     }
@@ -44,7 +49,7 @@ public class CarManager {
     public CarDto createCar(CreateCarRequest createCarRequest){
         Brand brand = brandManager.getBrandByBrandId(createCarRequest.getBrandId());
         List<Integer> colorId=createCarRequest.getColorId();
-        List<Color> colors = colorId.stream().map(colorManager::getColorByColorId).collect(Collectors.toList());
+        List<Color> colors = colorManager.getColorsByColorIds(colorId);
         Car car = new Car
                 (
                         createCarRequest.getCarName(),
@@ -57,7 +62,6 @@ public class CarManager {
 
     public List<CarDto> getAllCar() {
         List<Car> cars = this.carDao.findAll();
-
        return carDtoConverter.convert(cars);
 
     }
@@ -69,6 +73,14 @@ public class CarManager {
 
     public void deleteCarByCarId(int carId){
         carDao.deleteById(findCarByCarId(carId).getCarId());
+    }
+
+    private List<Car> findCarsByBrandId(int brandId){
+        return carDao.getCarsByBrand_BrandId(brandId).orElseThrow(()->new BrandNotFoundException(Constant.BRAND_NOT_FOUND));
+    }
+
+    public List<BrandCarDto> getCarsByBrandId(int brandId){
+        return brandCarDtoConverter.convert(findCarsByBrandId(brandId));
     }
 
     public CarDto update(UpdateCarRequest updateCarRequest) {

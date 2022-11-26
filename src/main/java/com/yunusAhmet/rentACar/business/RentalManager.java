@@ -11,12 +11,10 @@ import com.yunusAhmet.rentACar.dto.converter.RentCarDtoConverter;
 import com.yunusAhmet.rentACar.entity.Car;
 import com.yunusAhmet.rentACar.entity.Customer;
 import com.yunusAhmet.rentACar.entity.Rental;
+
 import org.springframework.stereotype.Service;
-
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+
 
 @Service
 public class RentalManager {
@@ -48,15 +46,13 @@ public class RentalManager {
         dateControl(request);
         Rental rental = new Rental(LocalDateTime.now().withNano(0),request.getReturnDate(), customer, car);
 
+        if(rentalDao.getRentalByCar_CarId(request.getCarId()).isPresent()){
+            throw new CarNotDeliverException(Constant.CAR_NOT_DELIVER);
+        }
 
-        List<Rental> rental1 = rentalDao.findAll();
-        List<Integer> carIds = rental1.stream().map(rental2 -> rental2.getCar().getCarId()).toList();
-        List<Integer> customerIds = rental1.stream().map(rental2 -> rental2.getCustomer().getCustomerId()).toList();
-
-        carAlreadyRent(car, carIds);
-
-        customerAlreadyRent(customer, customerIds);
-
+        if(rentalDao.getRentalByCustomer_CustomerId(request.getCustomerId()).isPresent()){
+            throw new CustomerAlreadyRentACar(Constant.CUSTOMER_ALREADY_RENT_A_CAR);
+        }
 
         Rental save = rentalDao.save(rental);
 
@@ -71,24 +67,6 @@ public class RentalManager {
         }
     }
 
-    private void customerAlreadyRent(Customer customer, List<Integer> customerIds) {
-        for (int customerId :
-                customerIds) {
-            if (customer.getCustomerId() == customerId) {
-                throw new CustomerAlreadyRentACar(Constant.CUSTOMER_ALREADY_RENT_A_CAR);
-            }
-        }
-    }
-
-    private void carAlreadyRent(Car car, List<Integer> carIds) {
-        for (int carId :
-                carIds) {
-
-            if (car.getCarId() == carId) {
-                throw new CarNotDeliverException(Constant.CAR_NOT_DELIVER);
-            }
-        }
-    }
 }
 
 
