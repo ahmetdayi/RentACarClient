@@ -1,12 +1,9 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.yunusahmet.rentacar.business.CarManager;
-import com.yunusahmet.rentacar.business.CustomerManager;
-import com.yunusahmet.rentacar.business.RentalManager;
 import com.yunusahmet.rentacar.core.exception.CarNotDeliverException;
 import com.yunusahmet.rentacar.core.exception.CustomerAlreadyRentACar;
 import com.yunusahmet.rentacar.core.exception.WrongReturnDateException;

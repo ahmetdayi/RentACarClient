@@ -1,4 +1,4 @@
-package com.yunusAhmet.rentACar;
+package com.yunusahmet.rentacar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.yunusahmet.rentacar.core.validator.PasswordMatches;
+import com.yunusahmet.rentacar.core.validator.create.PasswordMatches;
 import com.yunusahmet.rentacar.core.validator.ValidPassword;
 
 

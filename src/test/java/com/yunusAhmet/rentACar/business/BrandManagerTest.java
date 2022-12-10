@@ -1,9 +1,9 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.yunusahmet.rentacar.business.BrandManager;
+
 import com.yunusahmet.rentacar.core.exception.BrandAlreadyExistException;
 import com.yunusahmet.rentacar.core.exception.BrandNotFoundException;
 import com.yunusahmet.rentacar.dataAccess.BrandDao;

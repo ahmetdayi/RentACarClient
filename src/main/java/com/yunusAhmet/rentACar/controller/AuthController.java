@@ -17,6 +17,7 @@ import javax.validation.Valid;
 
 @RequestMapping("/login")
 @RestController
+
 public class AuthController {
 
     private final AuthManager authManager;

@@ -1,12 +1,9 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.yunusahmet.rentacar.business.BrandManager;
-import com.yunusahmet.rentacar.business.CarManager;
-import com.yunusahmet.rentacar.business.ColorManager;
 import com.yunusahmet.rentacar.core.exception.CarNotFoundException;
 import com.yunusahmet.rentacar.dataAccess.CarDao;
 import com.yunusahmet.rentacar.dto.*;

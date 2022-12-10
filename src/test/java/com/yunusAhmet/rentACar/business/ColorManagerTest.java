@@ -1,9 +1,9 @@
-package com.yunusAhmet.rentACar.business;
+package com.yunusahmet.rentacar.business;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.yunusahmet.rentacar.business.ColorManager;
+
 import com.yunusahmet.rentacar.core.exception.ColorAlreadyExistException;
 import com.yunusahmet.rentacar.core.exception.ColorNotFoundException;
 import com.yunusahmet.rentacar.dataAccess.ColorDao;

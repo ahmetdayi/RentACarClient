@@ -31,8 +31,7 @@ public class ColorManager {
     }
 
     public List<Color> getColorsByColorIds(List<Integer> colorIds){
-        return colorDao.
-                findColorsByColorIdIn(colorIds).orElseThrow(()->new ColorNotFoundException(Constant.COLOR_NOT_FOUND));
+        return colorDao.findColorsByColorIdIn(colorIds);
     }
 
 
