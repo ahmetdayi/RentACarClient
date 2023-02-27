@@ -32,10 +32,10 @@ public class Car {
     @JoinColumn()
     private Brand brand;
 
-    @OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "car")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "car")
     private Rental rental;
 
-    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "car")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "car")
     private List<Image> images;
 
     public Car( String carName, Long dailyPrice, String productYear, Brand brand, List<Color> colors) {

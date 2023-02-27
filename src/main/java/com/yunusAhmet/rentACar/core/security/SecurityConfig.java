@@ -38,10 +38,10 @@ public class SecurityConfig {
                 cors().
                 and().
                 authorizeRequests(auth -> {
-            auth.antMatchers("/brand/**","/color/**").hasAuthority("ADMIN");
-            auth.antMatchers("/car/**","/rental/**","/image/**").hasAnyAuthority("ADMIN", "USER");
-
-            auth.anyRequest().authenticated();
+//            auth.antMatchers("/brand/**","/color/**").hasAuthority("ADMIN");
+//            auth.antMatchers("/car/**","/rental/**","/image/**").hasAnyAuthority("ADMIN", "USER");
+                auth.anyRequest().permitAll();
+            //auth.anyRequest().authenticated();
         }).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().
                 addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class).build();

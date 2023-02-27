@@ -16,6 +16,9 @@ public class ImageConverter {
     }
 
     public List<ImageDto> converter(List<Image> fromList){
+        if (fromList==null){
+            return null;
+        }
         return fromList.stream().map(image -> new ImageDto(image.getId(), image.getUrl())).collect(Collectors.toList());
     }
 }

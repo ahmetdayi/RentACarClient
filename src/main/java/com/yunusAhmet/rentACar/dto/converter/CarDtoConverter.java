@@ -35,6 +35,9 @@ public class CarDtoConverter {
     }
 
     public List<CarDto> convert(List<Car> fromList){
+        if (fromList==null){
+            return null;
+        }
         return fromList
                 .stream()
                 .map(from ->new CarDto(
