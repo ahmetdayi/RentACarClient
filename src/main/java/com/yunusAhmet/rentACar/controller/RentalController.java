@@ -3,10 +3,7 @@ package com.yunusahmet.rentacar.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.yunusahmet.rentacar.business.RentalManager;
 import com.yunusahmet.rentacar.dto.RentACarRequest;
@@ -16,6 +13,7 @@ import javax.validation.Valid;
 
 @RequestMapping("/rental")
 @RestController
+@CrossOrigin(origins = "*")
 public class RentalController {
 
     private final RentalManager rentalManager;

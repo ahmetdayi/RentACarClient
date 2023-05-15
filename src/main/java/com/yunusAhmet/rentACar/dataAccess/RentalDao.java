@@ -3,6 +3,7 @@ package com.yunusahmet.rentacar.dataAccess;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.yunusahmet.rentacar.entity.Rental;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

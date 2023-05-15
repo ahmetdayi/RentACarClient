@@ -8,8 +8,8 @@ import com.yunusahmet.rentacar.dto.LoginResponse;
 public class LoginResponseConverter {
 
 
-    public LoginResponse convert(String token){
-        return new LoginResponse(token);
+    public LoginResponse convert(String token,int customerId){
+        return new LoginResponse(customerId,token);
 
     }
 }

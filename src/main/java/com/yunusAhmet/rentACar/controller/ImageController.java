@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RequestMapping("/image")
 @RestController
+@CrossOrigin(origins = "*")
 public class ImageController {
 
     private final ImageManager imageManager;

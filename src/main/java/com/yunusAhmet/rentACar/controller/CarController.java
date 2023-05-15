@@ -17,7 +17,7 @@ import java.util.List;
 
 @RequestMapping("/car")
 @RestController
-
+@CrossOrigin(origins = "*")
 public class CarController {
 
     private final CarManager carManager;
@@ -33,6 +33,11 @@ public class CarController {
     @GetMapping("/{brandId}")
     public ResponseEntity<List<BrandCarDto>> getAllCarByBrandId(@PathVariable int brandId){
         return ResponseEntity.ok(carManager.getCarsByBrandId(brandId));
+    }
+
+    @GetMapping("/getById")
+        public ResponseEntity<CarDto> getCarById(@RequestParam int carId){
+        return new ResponseEntity<>(carManager.findCarById(carId),HttpStatus.OK);
     }
 
     @GetMapping

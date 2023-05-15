@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RequestMapping("/brand")
 @RestController
-
+@CrossOrigin(origins = "*")
 public class BrandController {
 
     private final BrandManager brandManager;

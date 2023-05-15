@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RequestMapping("/color")
 @RestController
-
+@CrossOrigin(origins = "*")
 public class ColorController {
 
     private final ColorManager colorManager;

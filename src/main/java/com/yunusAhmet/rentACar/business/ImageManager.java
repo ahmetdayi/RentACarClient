@@ -58,9 +58,7 @@ public class ImageManager  {
         if(images.size()==6){
             throw new MaxImageException(Constant.MAX_IMAGE_LESS_THAN_SIX);
         }
-        if(images.size()==0){
-            throw new CarHasNotImageException(Constant.CAR_HAS_NOT_IMAGE);
-        }
+
     }
 
     public ImageDto addImage(MultipartFile multipartFile, int carId) {

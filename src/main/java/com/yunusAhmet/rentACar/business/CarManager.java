@@ -65,8 +65,10 @@ public class CarManager {
 
     }
 
-
-    public Car findCarByCarId(int carId){
+    public CarDto findCarById(int carId){
+        return carDtoConverter.convert(findCarByCarId(carId));
+    }
+    protected Car findCarByCarId(int carId){
         return carDao.findById(carId).orElseThrow(() -> new CarNotFoundException(Constant.CAR_NOT_FOUND));
     }
 

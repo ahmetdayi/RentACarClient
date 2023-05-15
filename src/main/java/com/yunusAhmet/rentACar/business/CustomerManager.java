@@ -37,6 +37,10 @@ public class CustomerManager implements UserDetailsService {
 
     public CustomerDto createCustomer(CreateCustomerRequest request){
 
+        if (request.getMatchingPassword() ==null || request.getPassword() ==null|| request.getEmail() ==null|| request.getFirstName()==null || request.getLastName()==null){
+            throw new RuntimeException("not null");
+        }
+
         Optional<Customer> customer = customerDao.findCustomerByEmail(request.getEmail());
         if (customer.isPresent()) {
             throw new CustomerEmailAlreadyExistException(Constant.CUSTOMER_EMAIL_ALREADY_EXIST);
